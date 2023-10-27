@@ -1,5 +1,5 @@
-// src/components/VendingMachine.js
 import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
 
 const VendingMachine = () => {
 
@@ -14,6 +14,21 @@ const VendingMachine = () => {
     0.25: 10,
     1: 10,
   });
+
+  return (
+    <div>
+        <h1>Vending Machine</h1>
+        <div>
+        {availableItems.map((item) => (
+          <div key={item.name}>
+            <Button>
+              {item.name}
+            </Button>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 
 };
 
