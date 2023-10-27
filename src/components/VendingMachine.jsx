@@ -44,6 +44,21 @@ const VendingMachine = () => {
         setInsertedMoney(insertedMoney + amount);
     };
 
+    const calculateChange = (changeAmount) => {
+        const change = {};
+        const availableCoins = [1, 0.25, 0.10, 0.05];
+    
+        for (const coin of availableCoins) {
+            const count = Math.floor(changeAmount / coin);
+            if (count > 0) {
+                change[coin] = count;
+                changeAmount -= count * coin;
+            }
+        }
+    
+        return change;
+    };
+
     const vendItem = () => {
         if (selectedItem) {
             return (
