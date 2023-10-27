@@ -15,6 +15,13 @@ const VendingMachine = () => {
         1: 10,
     });
 
+    const coinButtons = [
+        { label: 'Insert $0.05', value: 0.05 },
+        { label: 'Insert $0.10', value: 0.10 },
+        { label: 'Insert $0.25', value: 0.25 },
+        { label: 'Insert $1', value: 1 },
+      ];
+
     const [insertedMoney, setInsertedMoney] = useState(0);
     const [selectedItem, setSelectedItem] = useState(null);
 
@@ -32,6 +39,10 @@ const VendingMachine = () => {
     const handleReturnCoin = () => {
         setInsertedMoney(0);
     };
+
+    const handleInsertMoney = (amount) => {
+        setInsertedMoney(insertedMoney + amount);
+    };
     
 
     return (
@@ -47,6 +58,15 @@ const VendingMachine = () => {
                 />
             </div>
             ))}
+            </div>
+            <div>
+            {coinButtons.map((coinButton) => (
+                <MethodButton
+                    key={coinButton.value}
+                    text={coinButton.label}
+                    onClick={() => handleInsertMoney(coinButton.value)}
+                />
+                ))}
             </div>
             <div>
                 <MethodButton 
