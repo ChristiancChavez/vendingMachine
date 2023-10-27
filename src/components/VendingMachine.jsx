@@ -43,6 +43,17 @@ const VendingMachine = () => {
     const handleInsertMoney = (amount) => {
         setInsertedMoney(insertedMoney + amount);
     };
+
+    const vendItem = () => {
+        if (selectedItem) {
+            return (
+                <div>
+                <p>{selectedItem.name}</p>
+                {calculateChange(insertedMoney - selectedItem.price)}
+                </div>
+            );
+            }
+        };
     
 
     return (
@@ -50,23 +61,24 @@ const VendingMachine = () => {
             <h1>Vending Machine</h1>
             <div>
             {availableItems.map((item) => (
-            <div key={item.name}>
-                <MethodButton 
-                    text={item.name} 
-                    disabled={insertedMoney < item.price || item.count === 0} 
-                    onClick={handleSelectItem} 
-                />
-            </div>
+                <div key={item.name}>
+                    <MethodButton 
+                        text={item.name} 
+                        disabled={insertedMoney < item.price || item.count === 0} 
+                        onClick={handleSelectItem} 
+                    />
+                </div>
             ))}
             </div>
             <div>
-            {coinButtons.map((coinButton) => (
-                <MethodButton
-                    key={coinButton.value}
-                    text={coinButton.label}
-                    onClick={() => handleInsertMoney(coinButton.value)}
-                />
-                ))}
+                {coinButtons.map((coinButton) => (
+                    <MethodButton
+                        key={coinButton.value}
+                        text={coinButton.label}
+                        onClick={() => handleInsertMoney(coinButton.value)}
+                    />
+                    ))
+                }
             </div>
             <div>
                 <MethodButton 
@@ -74,6 +86,7 @@ const VendingMachine = () => {
                     text="Return Coin" 
                 />
             </div>
+            {vendItem()}
         </div>
     )
 };
