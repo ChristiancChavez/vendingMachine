@@ -25,6 +25,7 @@ const VendingMachine = () => {
 
     const [insertedMoney, setInsertedMoney] = useState(0);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [customerMoney, setCustomermoney] = useState(0);
 
     const handleSelectItem = (item) => {
         if (insertedMoney >= item.price && item.count > 0) {
@@ -38,7 +39,9 @@ const VendingMachine = () => {
     };
 
     const handleReturnCoin = () => {
+        setCustomermoney(prev => prev + insertedMoney);
         setInsertedMoney(0);
+
     };
 
     const handleInsertMoney = (amount) => {
@@ -47,7 +50,7 @@ const VendingMachine = () => {
     };
 
     const insertedMoneyRounded = insertedMoney.toFixed(2);
-
+    const customerMoneyRounded = customerMoney.toFixed(2);
     const calculateChange = (changeAmount) => {
         const change = {};
         const availableCoins = [1, 0.25, 0.10, 0.05];
@@ -113,6 +116,10 @@ const VendingMachine = () => {
             <div>
                 <p>Inserted Money</p>
                 <p>{insertedMoneyRounded}</p>
+            </div>
+            <div>
+                <p>Customer Money</p>
+                <p>{customerMoneyRounded}</p>
             </div>
             <div>
                 <MethodButton 
