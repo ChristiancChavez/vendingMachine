@@ -8,6 +8,7 @@ const VendingMachine = () => {
         { name: 'Juice', price: 1.00, count: 3 },
         { name: 'Soda', price: 1.50, count: 7 },
     ]);
+    
     const [availableChange, setAvailableChange] = useState({
         0.05: 10,
         0.10: 10,
@@ -20,7 +21,7 @@ const VendingMachine = () => {
         { label: 'Insert $0.10', value: 0.10 },
         { label: 'Insert $0.25', value: 0.25 },
         { label: 'Insert $1', value: 1 },
-      ];
+    ];
 
     const [insertedMoney, setInsertedMoney] = useState(0);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -42,22 +43,36 @@ const VendingMachine = () => {
 
     const handleInsertMoney = (amount) => {
         setInsertedMoney(insertedMoney + amount);
+        console.log('item selected');
     };
+
+    const insertedMoneyRounded = insertedMoney.toFixed(2);
 
     const calculateChange = (changeAmount) => {
         const change = {};
         const availableCoins = [1, 0.25, 0.10, 0.05];
-    
-        for (const coin of availableCoins) {
-            const count = Math.floor(changeAmount / coin);
-            if (count > 0) {
-                change[coin] = count;
-                changeAmount -= count * coin;
+        
+        // Create a copy of the availableChange state to avoid directly modifying it
+        const updatedAvailableChange = { ...availableChange };
+        
+            for (const coin of availableCoins) {
+            if (changeAmount >= coin && updatedAvailableChange[coin] > 0) {
+                const count = Math.floor(changeAmount / coin);
+                const numCoinsToUse = Math.min(count, updatedAvailableChange[coin]);
+                
+                change[coin] = numCoinsToUse;
+                changeAmount -= numCoinsToUse * coin;
+        
+                // Update the availableChange state
+                updatedAvailableChange[coin] -= numCoinsToUse;
             }
-        }
-    
-        return change;
-    };
+            }
+        
+            // Update the availableChange state with the modified object
+            setAvailableChange(updatedAvailableChange);
+        
+            return change;
+        };
 
     const vendItem = () => {
         if (selectedItem) {
@@ -80,7 +95,7 @@ const VendingMachine = () => {
                     <MethodButton 
                         text={item.name} 
                         disabled={insertedMoney < item.price || item.count === 0} 
-                        onClick={handleSelectItem} 
+                        onClick={() => handleSelectItem(item)} 
                     />
                 </div>
             ))}
@@ -94,6 +109,10 @@ const VendingMachine = () => {
                     />
                     ))
                 }
+            </div>
+            <div>
+                <p>Inserted Money</p>
+                <p>{insertedMoneyRounded}</p>
             </div>
             <div>
                 <MethodButton 

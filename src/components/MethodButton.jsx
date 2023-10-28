@@ -1,10 +1,10 @@
 import React from 'react'
 import Button from '@material-ui/core/Button';
 
-const MethodButton = ({text, userMethod, disabled}) => {
+const MethodButton = ({text, onClick, disabled=false}) => {
   return (
     <Button 
-        onClick={userMethod}
+        onClick={onClick}
         variant="contained"
         disabled={disabled}
     >
