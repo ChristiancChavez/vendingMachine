@@ -1,12 +1,18 @@
 import React, { useState } from 'react';
-import MethodButton from '../components/MethodButton';
+import MethodButton from './MethodButton';
+import Product from './Product';
+import Grid from '@mui/material/Grid';
+import { Box } from '@mui/material';
 
 const VendingMachine = () => {
 
-    const [availableItems, setAvailableItems] = useState([
+    const [availableProducts, setAvailableProducts] = useState([
         { name: 'Water', price: 0.65, count: 5 },
         { name: 'Juice', price: 1.00, count: 3 },
         { name: 'Soda', price: 1.50, count: 7 },
+        { name: 'Candy', price: 0.05, count: 10 },
+        { name: 'Sandwich', price: 4.50, count: 8 },
+        { name: 'Crackers', price: 1.05, count: 9 },
     ]);
     
     const [availableChange, setAvailableChange] = useState({
@@ -24,17 +30,17 @@ const VendingMachine = () => {
     ];
 
     const [insertedMoney, setInsertedMoney] = useState(0);
-    const [selectedItem, setSelectedItem] = useState(null);
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const [customerMoney, setCustomermoney] = useState(0);
 
     const handleSelectItem = (item) => {
         if (insertedMoney >= item.price && item.count > 0) {
-        setSelectedItem(item);
-        setInsertedMoney(insertedMoney - item.price);
-        const updatedItems = availableItems.map((i) =>
-            i.name === item.name ? { ...i, count: i.count - 1 } : i
-        );
-        setAvailableItems(updatedItems);
+            setSelectedProduct(item);
+            setInsertedMoney(insertedMoney - item.price);
+            const updatedItems = setAvailableProducts.map((i) =>
+                i.name === item.name ? { ...i, count: i.count - 1 } : i
+            );
+            setAvailableProducts(updatedItems);
         }
     };
 
@@ -59,16 +65,16 @@ const VendingMachine = () => {
         const updatedAvailableChange = { ...availableChange };
         
             for (const coin of availableCoins) {
-            if (changeAmount >= coin && updatedAvailableChange[coin] > 0) {
-                const count = Math.floor(changeAmount / coin);
-                const numCoinsToUse = Math.min(count, updatedAvailableChange[coin]);
-                
-                change[coin] = numCoinsToUse;
-                changeAmount -= numCoinsToUse * coin;
-        
-                // Update the availableChange state
-                updatedAvailableChange[coin] -= numCoinsToUse;
-            }
+                if (changeAmount >= coin && updatedAvailableChange[coin] > 0) {
+                    const count = Math.floor(changeAmount / coin);
+                    const numCoinsToUse = Math.min(count, updatedAvailableChange[coin]);
+                    
+                    change[coin] = numCoinsToUse;
+                    changeAmount -= numCoinsToUse * coin;
+            
+                    // Update the availableChange state
+                    updatedAvailableChange[coin] -= numCoinsToUse;
+                }
             }
         
             // Update the availableChange state with the modified object
@@ -78,31 +84,40 @@ const VendingMachine = () => {
         };
 
     const vendItem = () => {
-        if (selectedItem) {
+        if (selectedProduct) {
             return (
                 <div>
-                <p>{selectedItem.name}</p>
-                {calculateChange(insertedMoney - selectedItem.price)}
+                    <p>{selectedProduct.name}</p>
+                    {calculateChange(insertedMoney - selectedProduct.price)}
                 </div>
-            );
+                );
             }
         };
     
 
     return (
-        <div>
+        <Box>
             <h1>Vending Machine</h1>
-            <div>
-            {availableItems.map((item) => (
-                <div key={item.name}>
-                    <MethodButton 
-                        text={item.name} 
-                        disabled={insertedMoney < item.price || item.count === 0} 
-                        onClick={() => handleSelectItem(item)} 
-                    />
-                </div>
-            ))}
-            </div>
+            <Grid 
+                container
+                direction="row"
+                justifyContent="space-evenly"
+                alignItems="center"
+                spacing={6}
+            >
+                {availableProducts.map((item) => (
+                    <Grid item>
+                        <Product 
+                            key={item.name}
+                            text={item.name} 
+                            disabled={insertedMoney < item.price || item.count === 0} 
+                            onClick={() => handleSelectItem(item)}
+                            price={item.price}
+                            amount={item.count}
+                        />
+                    </Grid>
+                ))}
+            </Grid>
             <div>
                 {coinButtons.map((coinButton) => (
                     <MethodButton
@@ -128,7 +143,7 @@ const VendingMachine = () => {
                 />
             </div>
             {vendItem()}
-        </div>
+        </Box>
     )
 };
 

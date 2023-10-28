@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '@material-ui/core/Button';
 
-const MethodButton = ({text, onClick, disabled=false}) => {
+const MethodButton = ({ text, onClick, disabled= false, subText= 0 }) => {
   return (
     <Button 
         onClick={onClick}
@@ -9,6 +9,7 @@ const MethodButton = ({text, onClick, disabled=false}) => {
         disabled={disabled}
     >
       {text}
+      {subText > 0 && (` $${subText}`)}
     </Button>
   )
 }
