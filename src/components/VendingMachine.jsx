@@ -35,12 +35,12 @@ const VendingMachine = () => {
         if (insertedMoney >= 0 && item.count > 0) {
             //setSelectedProduct(item);
             const updateInsertedMoneyFixed = (insertedMoney.toFixed(2) * 100 - item.price.toFixed(2) * 100) / 100;
-            console.log(updateInsertedMoneyFixed, 'updateInsertedMoneyFixed');
             setInsertedMoney(updateInsertedMoneyFixed);
-            // const updatedItems = availableProducts.map((i) =>
-            //   i.name === item.name ? { ...i, count: i.count - 1 } : i
-            // );
-            // Remove this line: setAvailableProducts(updatedItems);
+            const updatedItems = availableProducts.map((i) =>
+                i.name === item.name ? { ...i, count: i.count - 1 } : i
+            );
+            console.log(updatedItems, 'updatedItems');
+            setAvailableProducts(updatedItems);
         }
     };
 
