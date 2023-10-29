@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import MethodButton from './MethodButton';
 import Product from './Product';
 import { Box, Grid } from '@mui/material';
@@ -17,50 +17,52 @@ const VendingMachine = () => {
         0.05: 10,
         0.10: 10,
         0.25: 10,
-        1: 10,
+        1.00: 10,
     });
 
     const coinButtons = [
         { label: 'Insert $0.05', value: 0.05 },
         { label: 'Insert $0.10', value: 0.10 },
         { label: 'Insert $0.25', value: 0.25 },
-        { label: 'Insert $1', value: 1 },
+        { label: 'Insert $1.00', value: 1.00 },
     ];
 
-    const [insertedMoney, setInsertedMoney] = useState(0);
+    const [insertedMoney, setInsertedMoney] = useState(0.0);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [customerMoney, setCustomermoney] = useState(0);
 
     const handleSelectItem = (item) => {
-        console.log('everything ok exterrnal');
-        console.log(insertedMoney, 'value');
-        if (insertedMoney >= item.price && item.count > 0) {
-            setSelectedProduct(item);
-            setInsertedMoney(insertedMoney - item.price);
-            console.log('everything ok internal');
+        console.log(item, 'item');
+        console.log(insertedMoney, 'insertedMoney in handleSelectItem');
+        if (insertedMoney >= 0 && item.count > 0) {
+            console.log('inside if');
+            //setSelectedProduct(item);
+            //setInsertedMoney(insertedMoney - item.price);
             // const updatedItems = availableProducts.map((i) =>
             //   i.name === item.name ? { ...i, count: i.count - 1 } : i
             // );
             // Remove this line: setAvailableProducts(updatedItems);
         }
     };
-    const selectItemRef = useRef(handleSelectItem);
+
+    //const selectItemRef = useRef((item) => handleSelectItem(item));
 
     const handleReturnCoin = () => {
         setCustomermoney(prev => prev + insertedMoney);
-        setInsertedMoney(0);
-
+        setInsertedMoney(0.0);
     };
 
-    const handleInsertMoney = (amount) => {
-        setInsertedMoney(insertedMoney + amount);
+    const handleInsertedMoney = (amount) => {
+        const fixedInsertedMoney = (insertedMoney.toFixed(2) * 100 + amount.toFixed(2) * 100) / 100;
+        console.log(fixedInsertedMoney, 'fixedInsertedMoney in handleInsertedMoney');
+        setInsertedMoney(fixedInsertedMoney);
     };
 
     const insertedMoneyRounded = insertedMoney.toFixed(2);
     const customerMoneyRounded = customerMoney.toFixed(2);
     const calculateChange = (changeAmount) => {
         const change = {};
-        const availableCoins = [1, 0.25, 0.10, 0.05];
+        const availableCoins = [1.00, 0.25, 0.10, 0.05];
         
         // Create a copy of the availableChange state to avoid directly modifying it
         const updatedAvailableChange = { ...availableChange };
@@ -111,7 +113,7 @@ const VendingMachine = () => {
                         <Product 
                             item={item}
                             disabled={insertedMoney < item.price || item.count === 0} 
-                            onClick={selectItemRef.current}
+                            onClick={handleSelectItem}
                         />
                     </Grid>
                 ))}
@@ -121,7 +123,7 @@ const VendingMachine = () => {
                     <MethodButton
                         key={coinButton.value}
                         text={coinButton.label}
-                        onClick={() => handleInsertMoney(coinButton.value)}
+                        onClick={() => handleInsertedMoney(coinButton.value)}
                     />
                     ))
                 }

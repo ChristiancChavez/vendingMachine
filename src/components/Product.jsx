@@ -5,7 +5,11 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 const Product = ({ item, disabled, onClick } ) => {
-    const { name, price, amount } = item;
+    const { name, price, count } = item;
+    const handleProductOnClick = () =>{
+        onClick(item);
+    };
+    
     return (
         <Card sx={{ width: 250, margin: 1, padding: 1, background: disabled ? 'lightGray' : 'lightBlue' }}>
             <CardContent>
@@ -16,9 +20,9 @@ const Product = ({ item, disabled, onClick } ) => {
                     ${price}
                 </Typography>
                 <Typography sx={{ fontSize: 16 }} color="text.secondary">
-                    {amount} unit
+                    {count} unit
                 </Typography>
-                <Button onClick={(item) => onClick(item)} sx={{ marginTop: 1 }} size="small" variant="contained" disabled={disabled}>Get</Button>
+                <Button onClick={handleProductOnClick} sx={{ marginTop: 1 }} size="small" variant="contained" disabled={disabled}>Get</Button>
             </CardContent>
         </Card>
     );
