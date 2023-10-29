@@ -11,9 +11,9 @@ const Product = ({ item, disabled, onClick } ) => {
     };
     
     return (
-        <Card sx={{ width: 250, margin: 1, padding: 1, background: disabled ? 'lightGray' : 'lightBlue' }}>
+        <Card sx={{ width: 250, margin: 1, background: disabled ? 'lightGray' : 'lightBlue' }}>
             <CardContent>
-                <Typography variant="h4" color="text.primary" gutterBottom>
+                <Typography variant="h4" color="text.primary">
                     {name}
                 </Typography>
                 <Typography sx={{ fontSize: 18 }}>

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import MethodButton from './MethodButton';
 import Product from './Product';
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import ProductSelected from './ProductSelected';
+import { Button } from '@material-ui/core';
 
 
 const VendingMachine = () => {
@@ -101,43 +102,52 @@ const VendingMachine = () => {
                     </Grid>
                 ))}
             </Grid>
-            <Box container spacing={2}>
-                <Grid 
-                    container  
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="center"
-                    sx={{ marginTop: 1 }}
-                >
-                    {coinButtons.map((coinButton) => (
-                        <Grid item >
-                            <MethodButton
-                                price={coinButton.value}
-                                count={coinButton.coins}
-                                onClick={() => handleInsertedMoney(coinButton.value)}
-                            />
-                        </Grid>
-                        ))
-                    }
-                </Grid>
-                <div>
-                    <p>Inserted Money</p>
-                    <p>{insertedMoneyRounded}</p>
-                </div>
-                <div>
-                    <p>Customer Money</p>
-                    <p>{customerMoneyRounded}</p>
-                </div>
-                <div>
-                    <MethodButton 
-                        onClick={handleReturnCoin} 
-                        text="Return Coin" 
-                    />
-                </div>
-                {selectedProduct &&
-                    <ProductSelected selectedProduct={selectedProduct} />
+            <Grid 
+                container
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+            >
+                {coinButtons.map((coinButton) => (
+                    <Grid item >
+                        <MethodButton
+                            price={coinButton.value}
+                            count={coinButton.coins}
+                            onClick={() => handleInsertedMoney(coinButton.value)}
+                        />
+                    </Grid>
+                    ))
                 }
-            </Box>
+            </Grid>
+            <Grid
+                container
+                direction="row"
+                justifyContent="space-evenly"
+                alignItems="center"
+                sx={{ marginTop: 2 }}
+            >
+                <Grid item>
+                    <Typography sx={{ fontSize: 20 }}>Inserted Money</Typography>
+                    <Typography sx={{ fontSize: 20 }}>{insertedMoneyRounded}</Typography>
+                </Grid>
+                <Grid item>
+                    <Typography sx={{ fontSize: 20 }}>Customer Money</Typography>
+                    <Typography sx={{ fontSize: 20 }}>{customerMoneyRounded}</Typography>
+                </Grid>
+                <Grid item>
+                    <Button
+                        onClick={handleReturnCoin} 
+                        size="large" 
+                        variant="contained" 
+                        disabled
+                    >
+                        Return inserted money
+                    </Button>
+                </Grid>
+            </Grid>
+            {selectedProduct &&
+                <ProductSelected selectedProduct={selectedProduct} />
+                }
         </Box>
     )
 };
