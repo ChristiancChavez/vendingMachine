@@ -32,12 +32,11 @@ const VendingMachine = () => {
     const [customerMoney, setCustomermoney] = useState(0);
 
     const handleSelectItem = (item) => {
-        console.log(item, 'item');
-        console.log(insertedMoney, 'insertedMoney in handleSelectItem');
         if (insertedMoney >= 0 && item.count > 0) {
-            console.log('inside if');
             //setSelectedProduct(item);
-            //setInsertedMoney(insertedMoney - item.price);
+            const updateInsertedMoneyFixed = (insertedMoney.toFixed(2) * 100 - item.price.toFixed(2) * 100) / 100;
+            console.log(updateInsertedMoneyFixed, 'updateInsertedMoneyFixed');
+            setInsertedMoney(updateInsertedMoneyFixed);
             // const updatedItems = availableProducts.map((i) =>
             //   i.name === item.name ? { ...i, count: i.count - 1 } : i
             // );
@@ -54,7 +53,6 @@ const VendingMachine = () => {
 
     const handleInsertedMoney = (amount) => {
         const fixedInsertedMoney = (insertedMoney.toFixed(2) * 100 + amount.toFixed(2) * 100) / 100;
-        console.log(fixedInsertedMoney, 'fixedInsertedMoney in handleInsertedMoney');
         setInsertedMoney(fixedInsertedMoney);
     };
 
@@ -86,16 +84,16 @@ const VendingMachine = () => {
             return change;
         };
 
-    const vendItem = () => {
-        if (selectedProduct) {
-            return (
-                <div>
-                    <p>{selectedProduct.name}</p>
-                    {calculateChange(insertedMoney - selectedProduct.price)}
-                </div>
-                );
-            }
-        };
+    // const vendItem = () => {
+    //     if (selectedProduct) {
+    //         return (
+    //             <div>
+    //                 <p>{selectedProduct.name}</p>
+    //                 {calculateChange(insertedMoney - selectedProduct.price)}
+    //             </div>
+    //             );
+    //         }
+    //     };
     
 
     return (
@@ -142,7 +140,12 @@ const VendingMachine = () => {
                     text="Return Coin" 
                 />
             </div>
-            {vendItem()}
+            {selectedProduct &&
+                <div>
+                    <p>{selectedProduct.name}</p>
+                    {calculateChange(insertedMoney - selectedProduct.price)}
+                </div>
+            }
         </Box>
     )
 };
