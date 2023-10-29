@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import MethodButton from './MethodButton';
 import Product from './Product';
-import Grid from '@mui/material/Grid';
-import { Box } from '@mui/material';
+import { Box, Grid } from '@mui/material';
+import { useRef } from 'react';
+
 
 const VendingMachine = () => {
 
@@ -10,9 +11,6 @@ const VendingMachine = () => {
         { name: 'Water', price: 0.65, count: 5 },
         { name: 'Juice', price: 1.00, count: 3 },
         { name: 'Soda', price: 1.50, count: 7 },
-        { name: 'Candy', price: 0.05, count: 10 },
-        { name: 'Sandwich', price: 4.50, count: 8 },
-        { name: 'Crackers', price: 1.05, count: 9 },
     ]);
     
     const [availableChange, setAvailableChange] = useState({
@@ -34,15 +32,19 @@ const VendingMachine = () => {
     const [customerMoney, setCustomermoney] = useState(0);
 
     const handleSelectItem = (item) => {
+        console.log('everything ok exterrnal');
+        console.log(insertedMoney, 'value');
         if (insertedMoney >= item.price && item.count > 0) {
             setSelectedProduct(item);
             setInsertedMoney(insertedMoney - item.price);
-            const updatedItems = setAvailableProducts.map((i) =>
-                i.name === item.name ? { ...i, count: i.count - 1 } : i
-            );
-            setAvailableProducts(updatedItems);
+            console.log('everything ok internal');
+            // const updatedItems = availableProducts.map((i) =>
+            //   i.name === item.name ? { ...i, count: i.count - 1 } : i
+            // );
+            // Remove this line: setAvailableProducts(updatedItems);
         }
     };
+    const selectItemRef = useRef(handleSelectItem);
 
     const handleReturnCoin = () => {
         setCustomermoney(prev => prev + insertedMoney);
@@ -52,7 +54,6 @@ const VendingMachine = () => {
 
     const handleInsertMoney = (amount) => {
         setInsertedMoney(insertedMoney + amount);
-        console.log('item selected');
     };
 
     const insertedMoneyRounded = insertedMoney.toFixed(2);
@@ -106,14 +107,11 @@ const VendingMachine = () => {
                 spacing={6}
             >
                 {availableProducts.map((item) => (
-                    <Grid item>
+                    <Grid item key={item.name}>
                         <Product 
-                            key={item.name}
-                            text={item.name} 
+                            item={item}
                             disabled={insertedMoney < item.price || item.count === 0} 
-                            onClick={() => handleSelectItem(item)}
-                            price={item.price}
-                            amount={item.count}
+                            onClick={selectItemRef.current}
                         />
                     </Grid>
                 ))}
