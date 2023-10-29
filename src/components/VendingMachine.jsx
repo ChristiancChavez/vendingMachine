@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import MethodButton from './MethodButton';
 import Product from './Product';
 import { Box, Grid } from '@mui/material';
-import { useRef } from 'react';
 import ProductSelected from './ProductSelected';
 
 
@@ -22,10 +21,10 @@ const VendingMachine = () => {
     });
 
     const coinButtons = [
-        { label: 'Insert $0.05', value: 0.05 },
-        { label: 'Insert $0.10', value: 0.10 },
-        { label: 'Insert $0.25', value: 0.25 },
-        { label: 'Insert $1.00', value: 1.00 },
+        { value: 0.05, coins: 10 },
+        { value: 0.10, coins: 10 },
+        { value: 0.25, coins: 10 },
+        { value: 1.00, coins: 10 },
     ];
 
     const [insertedMoney, setInsertedMoney] = useState(0.0);
@@ -102,33 +101,43 @@ const VendingMachine = () => {
                     </Grid>
                 ))}
             </Grid>
-            <div>
-                {coinButtons.map((coinButton) => (
-                    <MethodButton
-                        key={coinButton.value}
-                        text={coinButton.label}
-                        onClick={() => handleInsertedMoney(coinButton.value)}
+            <Box container spacing={2}>
+                <Grid 
+                    container  
+                    direction="row"
+                    justifyContent="center"
+                    alignItems="center"
+                    sx={{ marginTop: 1 }}
+                >
+                    {coinButtons.map((coinButton) => (
+                        <Grid item >
+                            <MethodButton
+                                price={coinButton.value}
+                                count={coinButton.coins}
+                                onClick={() => handleInsertedMoney(coinButton.value)}
+                            />
+                        </Grid>
+                        ))
+                    }
+                </Grid>
+                <div>
+                    <p>Inserted Money</p>
+                    <p>{insertedMoneyRounded}</p>
+                </div>
+                <div>
+                    <p>Customer Money</p>
+                    <p>{customerMoneyRounded}</p>
+                </div>
+                <div>
+                    <MethodButton 
+                        onClick={handleReturnCoin} 
+                        text="Return Coin" 
                     />
-                    ))
+                </div>
+                {selectedProduct &&
+                    <ProductSelected selectedProduct={selectedProduct} />
                 }
-            </div>
-            <div>
-                <p>Inserted Money</p>
-                <p>{insertedMoneyRounded}</p>
-            </div>
-            <div>
-                <p>Customer Money</p>
-                <p>{customerMoneyRounded}</p>
-            </div>
-            <div>
-                <MethodButton 
-                    onClick={handleReturnCoin} 
-                    text="Return Coin" 
-                />
-            </div>
-            {selectedProduct &&
-                <ProductSelected selectedProduct={selectedProduct} />
-            }
+            </Box>
         </Box>
     )
 };
