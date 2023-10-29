@@ -28,7 +28,7 @@ const VendingMachine = () => {
         { value: 1.00, coins: 10 },
     ];
 
-    const [insertedMoney, setInsertedMoney] = useState(0.0);
+    const [insertedMoney, setInsertedMoney] = useState(0);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [customerMoney, setCustomermoney] = useState(0);
 
@@ -46,7 +46,7 @@ const VendingMachine = () => {
 
     const handleReturnCoin = () => {
         setCustomermoney(prev => prev + insertedMoney);
-        setInsertedMoney(0.0);
+        setInsertedMoney(0);
     };
 
     const handleInsertedMoney = (amount) => {
@@ -81,6 +81,7 @@ const VendingMachine = () => {
         
             return change;
         };
+        console.log(insertedMoney > 0);
 
     return (
         <Box>
@@ -139,7 +140,7 @@ const VendingMachine = () => {
                         onClick={handleReturnCoin} 
                         size="large" 
                         variant="contained" 
-                        disabled
+                        disabled={insertedMoney === 0}
                     >
                         Return inserted money
                     </Button>
