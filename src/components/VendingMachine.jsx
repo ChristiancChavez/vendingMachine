@@ -3,6 +3,7 @@ import MethodButton from './MethodButton';
 import Product from './Product';
 import { Box, Grid } from '@mui/material';
 import { useRef } from 'react';
+import ProductSelected from './ProductSelected';
 
 
 const VendingMachine = () => {
@@ -39,12 +40,9 @@ const VendingMachine = () => {
             const updatedItems = availableProducts.map((i) =>
                 i.name === item.name ? { ...i, count: i.count - 1 } : i
             );
-            console.log(updatedItems, 'updatedItems');
             setAvailableProducts(updatedItems);
         }
     };
-
-    //const selectItemRef = useRef((item) => handleSelectItem(item));
 
     const handleReturnCoin = () => {
         setCustomermoney(prev => prev + insertedMoney);
@@ -83,18 +81,6 @@ const VendingMachine = () => {
         
             return change;
         };
-
-    // const vendItem = () => {
-    //     if (selectedProduct) {
-    //         return (
-    //             <div>
-    //                 <p>{selectedProduct.name}</p>
-    //                 {calculateChange(insertedMoney - selectedProduct.price)}
-    //             </div>
-    //             );
-    //         }
-    //     };
-    
 
     return (
         <Box>
@@ -141,10 +127,7 @@ const VendingMachine = () => {
                 />
             </div>
             {selectedProduct &&
-                <div>
-                    <p>{selectedProduct.name}</p>
-                    {calculateChange(insertedMoney - selectedProduct.price)}
-                </div>
+                <ProductSelected selectedProduct={selectedProduct} />
             }
         </Box>
     )
