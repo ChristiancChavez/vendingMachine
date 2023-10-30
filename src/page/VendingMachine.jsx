@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import MethodButton from './MethodButton';
-import Product from './Product';
 import { Box, Grid, Typography } from '@mui/material';
-import ProductSelected from './ProductSelected';
 import { Button } from '@material-ui/core';
-
+import CoinMethods from '../components/coinMethods/CoinMethods';
+import Product from '../components/product/Product';
+import ProductSelected from '../components/productSelected/ProductSelected';
 
 const VendingMachine = () => {
 
@@ -103,7 +102,7 @@ const VendingMachine = () => {
             >
                 {coinButtons.map((coinButton) => (
                     <Grid item key={coinButton.value}>
-                        <MethodButton
+                        <CoinMethods
                             price={coinButton.value}
                             coinCount={coinButton.coins}
                             onClick={() => handleInsertedMoney(coinButton.value)}

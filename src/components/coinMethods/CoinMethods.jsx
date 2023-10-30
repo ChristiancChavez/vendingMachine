@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Typography, Badge, Card } from '@mui/material';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
-const MethodButton = ({ onClick, price, initialCount, updateBadge, coinCount }) => { 
+const CoinMethods = ({ onClick, price, updateBadge, coinCount }) => { 
 
   const handleClick = () => {
     if (coinCount > 0) {
@@ -39,4 +39,4 @@ const MethodButton = ({ onClick, price, initialCount, updateBadge, coinCount }) 
   )
 }
 
-export default MethodButton;
+export default CoinMethods;
