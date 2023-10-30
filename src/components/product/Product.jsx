@@ -30,7 +30,7 @@ const Product = ({ item, disabled, onClick } ) => {
                     size="small" 
                     variant="contained" 
                     disabled={disabled} 
-                    data-testid="get-button"
+                    data-testid={`get-button-${name}`}
                     >
                     Get
                 </Button>

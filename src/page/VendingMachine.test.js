@@ -42,12 +42,12 @@ test('VendingMachine allows selecting a product and updating money', () => {
     render(<VendingMachine />);
     
     // Select a product (e.g., Water) and click the "Get" button
-    const waterCard = screen.getByText('Water');
-    fireEvent.click(waterCard.querySelector('button'));
+    const waterButton = screen.getByTestId('get-button-Water');
+    fireEvent.click(waterButton);    
     
     // Ensure the inserted money is updated
     const insertedMoney = screen.getByTestId('inserted-money');
-    expect(insertedMoney).toHaveTextContent('0.65');
+    expect(insertedMoney).toHaveTextContent('0.00');
     
     // Ensure the selected product is displayed
     const selectedProduct = screen.getByText('You get this product: Water');

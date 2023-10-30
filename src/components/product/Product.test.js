@@ -18,7 +18,7 @@ test('Product component renders correctly', () => {
     const productName = getByText('Water');
     const productPrice = getByText('$0.65');
     const productCount = getByText('5 unit');
-    const getButton = getByTestId('get-button');
+    const getButton = getByTestId('get-button-Water');
 
     expect(productName).toBeInTheDocument();
     expect(productPrice).toBeInTheDocument();
@@ -43,7 +43,7 @@ test('Product component renders correctly when disabled', () => {
     const productName = getByText('Water');
     const productPrice = getByText('$0.65');
     const productCount = getByText('0 unit');
-    const getButton = getByTestId('get-button');
+    const getButton = getByTestId('get-button-Water');
 
     expect(productName).toBeInTheDocument();
     expect(productPrice).toBeInTheDocument();
@@ -65,7 +65,7 @@ test('Product component renders correctly when disabled', () => {
         <Product item={item} disabled={disabled} onClick={onClick} />
     );
 
-    const getButton = getByTestId('get-button');
+    const getButton = getByTestId('get-button-Water');
     fireEvent.click(getButton);
 
     expect(onClick).toHaveBeenCalledTimes(1);
