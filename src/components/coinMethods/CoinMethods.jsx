@@ -16,7 +16,7 @@ const CoinMethods = ({ onClick, price, updateBadge, coinCount }) => {
     if (coinCount === 0) {
       return "/";
     } else {
-      return coinCount; // Show the number of coins remaining
+      return coinCount;
     }
   };
 
