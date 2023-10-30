@@ -15,18 +15,26 @@ const MethodButton = ({ onClick, disabled=false, price,initialCount, updateBadge
     }
   };
 
+  const updateBadgeContent = (count) => {
+    if (count === 0) {
+      return "/";
+    } else {
+      return count; // Show the number of coins remaining
+    }
+  };
+
   return (
     <Card sx={{ width: 130, p: 1, m: 2, background: 'lightBlue' }}>
       <Typography variant="h6" color="black" gutterBottom>
         ${price}
       </Typography>
-      <Badge sx={{marginTop: 2, marginBottom: 2 }} color="primary" overlap="circular" badgeContent={count} showZero>
+      <Badge sx={{marginTop: 2, marginBottom: 2 }} color="primary" overlap="circular" badgeContent={updateBadgeContent(count)} showZero>
         <CurrencyExchangeIcon color='action' fontSize='large' />
       </Badge>
       <Button 
         onClick={handleClick}
         variant="contained"
-        disabled={disabled}
+        disabled={count === 0}
       >
         Insert Coin
       </Button>
