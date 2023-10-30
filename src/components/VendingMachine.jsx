@@ -27,6 +27,13 @@ const VendingMachine = () => {
 
     const [customerMoney, setCustomermoney] = useState(0);
 
+    const initialCoinButtons = [
+        { value: 0.05, coins: 10 },
+        { value: 0.10, coins: 10 },
+        { value: 0.25, coins: 10 },
+        { value: 1.00, coins: 10 },
+    ];
+
     const handleSelectItem = (item) => {
         if (insertedMoney >= 0 && item.count > 0) {
             //setSelectedProduct(item);
@@ -39,9 +46,14 @@ const VendingMachine = () => {
         }
     };
 
+    const resetCoins = () => {
+        setCoinButtons(initialCoinButtons);
+    };
+
     const handleReturnCoin = () => {
         setCustomermoney(prev => prev + insertedMoney);
         setInsertedMoney(0);
+        resetCoins();
     };
 
     const handleInsertedMoney = (amount) => {
@@ -93,7 +105,7 @@ const VendingMachine = () => {
                     <Grid item key={coinButton.value}>
                         <MethodButton
                             price={coinButton.value}
-                            initialCount={coinButton.coins}
+                            coinCount={coinButton.coins}
                             onClick={() => handleInsertedMoney(coinButton.value)}
                             updateBadge={updateBadge}
                         />
@@ -127,9 +139,7 @@ const VendingMachine = () => {
                     </Button>
                 </Grid>
             </Grid>
-            {selectedProduct &&
-                <ProductSelected selectedProduct={selectedProduct} />
-                }
+            {selectedProduct && <ProductSelected selectedProduct={selectedProduct} />}
         </Box>
     )
 };

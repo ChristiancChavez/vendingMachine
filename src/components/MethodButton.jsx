@@ -1,25 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Button from '@material-ui/core/Button';
 import { Typography, Badge, Card } from '@mui/material';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
-const MethodButton = ({ onClick, disabled=false, price,initialCount, updateBadge }) => { 
-  const [count, setCount] = useState(initialCount);
+const MethodButton = ({ onClick, price, initialCount, updateBadge, coinCount }) => { 
 
   const handleClick = () => {
-    if (count > 0) {
-      setCount(count - 1);
+    if (coinCount > 0) {
       onClick();
-      // Update the badge content
       updateBadge(price);
     }
   };
 
-  const updateBadgeContent = (count) => {
-    if (count === 0) {
+  const updateBadgeContent = (coinCount) => {
+    if (coinCount === 0) {
       return "/";
     } else {
-      return count; // Show the number of coins remaining
+      return coinCount; // Show the number of coins remaining
     }
   };
 
@@ -28,13 +25,13 @@ const MethodButton = ({ onClick, disabled=false, price,initialCount, updateBadge
       <Typography variant="h6" color="black" gutterBottom>
         ${price}
       </Typography>
-      <Badge sx={{marginTop: 2, marginBottom: 2 }} color="primary" overlap="circular" badgeContent={updateBadgeContent(count)} showZero>
+      <Badge sx={{marginTop: 2, marginBottom: 2 }} color="primary" overlap="circular" badgeContent={updateBadgeContent(coinCount)} showZero>
         <CurrencyExchangeIcon color='action' fontSize='large' />
       </Badge>
       <Button 
         onClick={handleClick}
         variant="contained"
-        disabled={count === 0}
+        disabled={coinCount === 0}
       >
         Insert Coin
       </Button>
