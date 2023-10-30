@@ -6,7 +6,7 @@ const ProductSelected = ({ selectedProduct }) => {
         <Alert 
             severity="success" 
             action={
-                <Button color="inherit" size="small">
+                <Button color="inherit" size="small" data-testid="close-button">
                     Close
                 </Button>
             }
