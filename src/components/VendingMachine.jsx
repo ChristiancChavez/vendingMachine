@@ -13,23 +13,18 @@ const VendingMachine = () => {
         { name: 'Juice', price: 1.00, count: 3 },
         { name: 'Soda', price: 1.50, count: 7 },
     ]);
-    
-    const [availableChange, setAvailableChange] = useState({
-        0.05: 10,
-        0.10: 10,
-        0.25: 10,
-        1.00: 10,
-    });
 
-    const coinButtons = [
+    const [coinButtons, setCoinButtons] = useState([
         { value: 0.05, coins: 10 },
         { value: 0.10, coins: 10 },
         { value: 0.25, coins: 10 },
         { value: 1.00, coins: 10 },
-    ];
+    ]);
 
     const [insertedMoney, setInsertedMoney] = useState(0);
+
     const [selectedProduct, setSelectedProduct] = useState(null);
+
     const [customerMoney, setCustomermoney] = useState(0);
 
     const handleSelectItem = (item) => {
@@ -55,33 +50,18 @@ const VendingMachine = () => {
     };
 
     const insertedMoneyRounded = insertedMoney.toFixed(2);
+
     const customerMoneyRounded = customerMoney.toFixed(2);
-    const calculateChange = (changeAmount) => {
-        const change = {};
-        const availableCoins = [1.00, 0.25, 0.10, 0.05];
-        
-        // Create a copy of the availableChange state to avoid directly modifying it
-        const updatedAvailableChange = { ...availableChange };
-        
-            for (const coin of availableCoins) {
-                if (changeAmount >= coin && updatedAvailableChange[coin] > 0) {
-                    const count = Math.floor(changeAmount / coin);
-                    const numCoinsToUse = Math.min(count, updatedAvailableChange[coin]);
-                    
-                    change[coin] = numCoinsToUse;
-                    changeAmount -= numCoinsToUse * coin;
-            
-                    // Update the availableChange state
-                    updatedAvailableChange[coin] -= numCoinsToUse;
+    const updateBadge = (coinValue) => {
+        setCoinButtons((prevButtons) =>
+            prevButtons.map((button) => {
+                if (button.value === coinValue) {
+                return { ...button, coins: button.coins - 1 };
                 }
-            }
-        
-            // Update the availableChange state with the modified object
-            setAvailableChange(updatedAvailableChange);
-        
-            return change;
-        };
-        console.log(insertedMoney > 0);
+                return button;
+            })
+        );
+    };   
 
     return (
         <Box>
@@ -110,11 +90,12 @@ const VendingMachine = () => {
                 alignItems="center"
             >
                 {coinButtons.map((coinButton) => (
-                    <Grid item >
+                    <Grid item key={coinButton.value}>
                         <MethodButton
                             price={coinButton.value}
-                            count={coinButton.coins}
+                            initialCount={coinButton.coins}
                             onClick={() => handleInsertedMoney(coinButton.value)}
+                            updateBadge={updateBadge}
                         />
                     </Grid>
                     ))
