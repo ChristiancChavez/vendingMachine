@@ -32,6 +32,7 @@ const CoinMethods = ({ onClick, price, updateBadge, coinCount }) => {
         onClick={handleClick}
         variant="contained"
         disabled={coinCount === 0}
+        data-testid="coin-method-button"
       >
         Insert Coin
       </Button>
