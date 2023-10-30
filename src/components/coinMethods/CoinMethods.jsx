@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button';
 import { Typography, Badge, Card } from '@mui/material';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 
-const CoinMethods = ({ onClick, price, updateBadge, coinCount }) => { 
+const CoinMethods = ({ onClick, price, updateBadge, coinCount, text }) => { 
 
   const handleClick = () => {
     if (coinCount > 0) {
@@ -22,8 +22,8 @@ const CoinMethods = ({ onClick, price, updateBadge, coinCount }) => {
 
   return (
     <Card sx={{ width: 130, p: 1, m: 2, background: 'lightBlue' }}>
-      <Typography variant="h6" color="black" gutterBottom>
-        ${price}
+      <Typography data-testid={`coin-${text}`} variant="h6" color="black" gutterBottom>
+        {text}
       </Typography>
       <Badge sx={{marginTop: 2, marginBottom: 2 }} color="primary" overlap="circular" badgeContent={updateBadgeContent(coinCount)} showZero>
         <CurrencyExchangeIcon color='action' fontSize='large' />

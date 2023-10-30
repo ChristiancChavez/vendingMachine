@@ -14,12 +14,12 @@ const VendingMachine = () => {
     ]);
 
     const [coinButtons, setCoinButtons] = useState([
-        { value: 0.05, coins: 10 },
-        { value: 0.10, coins: 10 },
-        { value: 0.25, coins: 10 },
-        { value: 1.00, coins: 10 },
-    ]);
-
+        { value: 0.05, coins: 10, text: '$0.05' },
+        { value: 0.10, coins: 10, text: '$0.10'},
+        { value: 0.25, coins: 10 ,text: '$0.25'},
+        { value: 1.00, coins: 10, text: '$1.00'}
+    ])    
+    
     const [insertedMoney, setInsertedMoney] = useState(0);
 
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -107,6 +107,7 @@ const VendingMachine = () => {
                             coinCount={coinButton.coins}
                             onClick={() => handleInsertedMoney(coinButton.value)}
                             updateBadge={updateBadge}
+                            text={coinButton.text}
                         />
                     </Grid>
                     ))
@@ -121,11 +122,11 @@ const VendingMachine = () => {
             >
                 <Grid item>
                     <Typography sx={{ fontSize: 20 }}>Inserted Money</Typography>
-                    <Typography sx={{ fontSize: 20 }}>{insertedMoneyRounded}</Typography>
+                    <Typography data-testid='inserted-money' sx={{ fontSize: 20 }}>{insertedMoneyRounded}</Typography>
                 </Grid>
                 <Grid item>
                     <Typography sx={{ fontSize: 20 }}>Customer Money</Typography>
-                    <Typography sx={{ fontSize: 20 }}>{customerMoneyRounded}</Typography>
+                    <Typography data-testid='customer-money' sx={{ fontSize: 20 }}>{customerMoneyRounded}</Typography>
                 </Grid>
                 <Grid item>
                     <Button
@@ -133,6 +134,7 @@ const VendingMachine = () => {
                         size="large" 
                         variant="contained" 
                         disabled={insertedMoney === 0}
+                        data-testid='return-money-button'
                     >
                         Return inserted money
                     </Button>

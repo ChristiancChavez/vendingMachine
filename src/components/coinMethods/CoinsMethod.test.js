@@ -7,13 +7,14 @@ test('CoinMethods renders with initial coin count', () => {
     const onClick = jest.fn();
     const price = 0.25;
     const coinCount = 5;
+    const text = '$0.25';
 
     const { getByText, getByTestId } = render(
-        <CoinMethods onClick={onClick} price={price} coinCount={coinCount} />
+        <CoinMethods onClick={onClick} price={price} coinCount={coinCount} text={text} />
     );
 
     // Assert that the price and coin count are displayed.
-    expect(getByText('$0.25')).toBeInTheDocument();
+    expect(getByTestId('coin-$0.25')).toBeInTheDocument();
     expect(getByText('5')).toBeInTheDocument();
 
     // Assert that the button is not disabled.
