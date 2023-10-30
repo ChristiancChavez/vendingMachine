@@ -11,7 +11,9 @@ const Product = ({ item, disabled, onClick } ) => {
     };
     
     return (
-        <Card sx={{ width: 250, margin: 1, background: disabled ? 'lightGray' : 'lightBlue' }}>
+        <Card 
+            sx={{ width: 250, margin: 1, background: disabled ? 'lightGray' : 'lightBlue' }}
+        >
             <CardContent>
                 <Typography variant="h4" color="text.primary">
                     {name}
@@ -22,7 +24,16 @@ const Product = ({ item, disabled, onClick } ) => {
                 <Typography sx={{ fontSize: 16 }} color="text.secondary">
                     {count} unit
                 </Typography>
-                <Button onClick={handleProductOnClick} sx={{ marginTop: 1 }} size="small" variant="contained" disabled={disabled}>Get</Button>
+                <Button 
+                    onClick={handleProductOnClick} 
+                    sx={{ marginTop: 1 }} 
+                    size="small" 
+                    variant="contained" 
+                    disabled={disabled} 
+                    data-testid="get-button"
+                    >
+                    Get
+                </Button>
             </CardContent>
         </Card>
     );
