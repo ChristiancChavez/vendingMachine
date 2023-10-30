@@ -35,7 +35,7 @@ const VendingMachine = () => {
 
     const handleSelectItem = (item) => {
         if (insertedMoney >= 0 && item.count > 0) {
-            //setSelectedProduct(item);
+            setSelectedProduct(item);
             const updateInsertedMoneyFixed = (insertedMoney.toFixed(2) * 100 - item.price.toFixed(2) * 100) / 100;
             setInsertedMoney(updateInsertedMoneyFixed);
             const updatedItems = availableProducts.map((i) =>

@@ -2,6 +2,43 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## project locale
+`cd vending-machine-app`
+
+## clone this project from:
+`https://github.com/ChristiancChavez/vendingMachine`
+
+### Description
+## Vending Machine App
+The Vending Machine App is a web-based application that simulates the operation of a real-world vending machine. This interactive and user-friendly application allows users to select various products, insert coins, and receive their chosen products.
+
+## Key Features
+Product Selection: Users can browse through available products displayed on the vending machine interface. Each product provides information about its name, price, and the number of units left in stock.
+
+Coin Insertion: To purchase a product, users can insert coins of different denominations. The vending machine accepts coins of $0.05, $0.10, $0.25, and $1.00. Users can click on the coin buttons to insert specific coin values.
+
+Change Handling: The application manages the user's inserted money and provides real-time updates on the total amount. Users can also return their inserted money if they change their minds or decide not to make a purchase.
+
+Product Dispensing: When a user selects a product and has sufficient credit, the application dispenses the chosen product and updates the stock count.
+
+User Feedback: Users receive feedback on their actions, such as product selection success and remaining balance.
+
+## Components
+The Vending Machine App is composed of several components:
+
+VendingMachine: The main component that displays the vending machine interface.
+Product: Represents a product available in the machine.
+CoinMethods: Represents the coin insertion buttons.
+ProductSelected: Displays a success message when a product is selected.
+You can find these components in the src/components directory.
+
+## Technologies Used
+React: The frontend of the application is built using React, a popular JavaScript library for building user interfaces.
+
+Material-UI: Material-UI is used for designing and styling the components, providing a modern and responsive user interface.
+
+React Testing Library: Unit tests for the application are conducted using React Testing Library.
+
 ## Available Scripts
 
 In the project directory, you can run:
